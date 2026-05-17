@@ -22,6 +22,7 @@ app.use(limiter({
 
 app.use(express.json());
 app.use('/api/', limiter)
+app.use('/api/auth', require('./routes/auth'));
 
 // Health here checks the server health and lets us know if the server/api is running
 app.get("/health", (req, res) => {
