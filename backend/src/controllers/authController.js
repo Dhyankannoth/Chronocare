@@ -20,7 +20,7 @@ const generateToken = (userID) => {
 const register = async (req, res) => {
     try {
         const { email, username, password } = req.body;
-        const existingUser = pool.query(
+        const existingUser = await pool.query(
             'SELECT id, username, email FROM users WHERE email = $1 OR username = $2',
             [email, username]
         )

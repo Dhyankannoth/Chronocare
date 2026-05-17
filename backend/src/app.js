@@ -8,20 +8,23 @@ JSON parser -> Rate Limiter -> Route Handler -> response sent back
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
-const limiter = require("express-rate-limit");
+const rateLimit = require("express-rate-limit");
 
 const app = express();
 
 app.use(cors({ origin: process.env.FRONTEND_URL }));
 app.use(helmet());
-app.use(limiter({
+app.use(express.json());
+
+const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 100,
     message: "Too many requests from this IP, please try again later",
-}))
+    standardHeaders: true,
+    legacyHeaders: false,
+})
 
-app.use(express.json());
-app.use('/api/', limiter)
+app.use(limiter)
 app.use('/api/auth', require('./routes/auth'));
 
 // Health here checks the server health and lets us know if the server/api is running
