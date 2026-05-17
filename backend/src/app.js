@@ -14,7 +14,7 @@ const app = express();
 
 app.use(cors({ origin: process.env.FRONTEND_URL }));
 app.use(helmet());
-app.use(rateLimit({
+app.use(limiter({
     windowMs: 15 * 60 * 1000,
     max: 100,
     message: "Too many requests from this IP, please try again later",
@@ -22,6 +22,7 @@ app.use(rateLimit({
 
 app.use(express.json());
 app.use('/api/', limiter)
+app.use('/api/auth', require('./routes/auth'));
 
 // Health here checks the server health and lets us know if the server/api is running
 app.get("/health", (req, res) => {
