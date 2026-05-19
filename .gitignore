@@ -12,3 +12,8 @@ frontend/build/
 .DS_Store
 Thumbs.db
 *.log
+test.http
+
+backend/src/scraper/venv/
+backend/src/scraper/__pycache__/
+backend/src/scraper/*.pyc
